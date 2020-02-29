@@ -35,20 +35,15 @@ class EnigmaTest < Minitest::Test
     expected = {a: 7, b: 19, c: 12, d: 38}
 
     assert_equal expected, @enigma.generate_shifts("01032", "031886")
-
-    @enigma.stubs(:rand).with(99999).returns(923)
-    Date.expects(:today).returns(Date.new(2015, 04, 17))
-    expected = {a: 2, b: 11, c: 94, d: 28}
-
-    assert_equal expected, @enigma.generate_shifts
   end
 
   def test_it_can_encrypt_a_message
-    skip
     expected = {encryption: "keder ohulw",
                 key: "02715",
                 date: "040895"}
 
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
+
+    # Date.expects(:today).returns(Date.new(2015, 04, 17))
   end
 end

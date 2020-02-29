@@ -23,7 +23,7 @@ class Enigma
     date_squared.to_s[-4..-1]
   end
 
-  def generate_shifts(key = generate_key, date = Date.today.strftime("%d%m%y"))
+  def generate_shifts(key, date)
     keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
 
     offset = generate_offset(date)
@@ -31,4 +31,6 @@ class Enigma
 
     keys.merge(offsets) { |_, shift, offset| shift.to_i + offset.to_i }
   end
+
+  def encrypt(message, key, date)
 end
