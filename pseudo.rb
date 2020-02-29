@@ -2,11 +2,12 @@
 ("a".."z").to_a << " "
 
 # generate keys
-key_source = Array.new(5).map { rand(9).to_s }
-key_a = (key_source[0] + key_source[1]).to_i
-key_b = (key_source[1] + key_source[2]).to_i
-key_c = (key_source[2] + key_source[3]).to_i
-key_d = (key_source[3] + key_source[4]).to_i
+key_generator = Array.new(5).map { rand(9).to_s }
+key = key_generator.join
+key_a = (key[0] + key[1]).to_i
+key_b = (key[1] + key[2]).to_i
+key_c = (key[2] + key[3]).to_i
+key_d = (key[3] + key[4]).to_i
 keys = { a: key_a, b: key_b, c: key_c, d: key_d }
 
 # generate offsets

@@ -4,12 +4,16 @@
       "/Users/alexlatham/turing/1module/projects/enigma/lib/enigma.rb": {
         "lines": [
           1,
+          null,
+          1,
+          1,
+          6,
           1,
           null,
           null
         ]
       }
     },
-    "timestamp": 1582935705
+    "timestamp": 1582938166
   }
 }
