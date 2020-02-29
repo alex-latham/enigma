@@ -17,4 +17,10 @@ class EnigmaTest < Minitest::Test
     assert_equal 5, key.length
     assert key.match(/^(\d)+$/)
   end
+
+  def test_it_can_generate_an_offset
+    offset = @enigma.generate_offset("040895")
+
+    assert_equal 1025, offset
+  end
 end
