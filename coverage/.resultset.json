@@ -1,0 +1,15 @@
+{
+  "Unit Tests": {
+    "coverage": {
+      "/Users/alexlatham/turing/1module/projects/enigma/lib/enigma.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null
+        ]
+      }
+    },
+    "timestamp": 1582935705
+  }
+}
