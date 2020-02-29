@@ -23,7 +23,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_a_key
-    @enigma.stubs(:rand).with(99999).returns(923)
+    @enigma.stubs(:rand).returns(923)
     assert_equal "00923", @enigma.generate_key
   end
 
