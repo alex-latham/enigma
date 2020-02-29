@@ -18,9 +18,17 @@ class Enigma
     "0" * (5 - unpadded_key.length) + unpadded_key
   end
 
-  def generate_offset(date = Date.today.strftime("%d%m%y"))
+  def generate_offset(date)
     date_squared = date.to_i**2
     date_squared.to_s[-4..-1]
   end
 
+  def generate_shifts(key = generate_key, date = Date.today.strftime("%d%m%y"))
+    keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
+
+    offset = generate_offset(date)
+    offsets = {a: offset[0], b: offset[1], c: offset[2], d: offset[3]}
+
+    keys.merge(offsets) { |_, shift, offset| shift.to_i + offset.to_i }
+  end
 end
