@@ -1,5 +1,4 @@
 require_relative 'test_helper'
-require 'date'
 require './lib/enigma'
 
 class EnigmaTest < Minitest::Test
@@ -12,11 +11,10 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_a_key
+    @enigma.stubs(:rand).with(99999).returns(923)
     key = @enigma.generate_key
 
-    assert_instance_of String, key
-    assert_equal 5, key.length
-    assert_equal true, key.match?(/^(\d)+$/)
+    assert_equal "00923", key
   end
 
   def test_it_can_generate_an_offset
