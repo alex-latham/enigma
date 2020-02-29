@@ -32,5 +32,6 @@ class Enigma
     keys.merge(offsets) { |_, shift, offset| shift.to_i + offset.to_i }
   end
 
-  def encrypt(message, key, date)
+  def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
+  end
 end

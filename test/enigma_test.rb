@@ -37,7 +37,7 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.generate_shifts("01032", "031886")
   end
 
-  def test_it_can_encrypt_a_message
+  def test_it_can_encrypt
     expected = {encryption: "keder ohulw",
                 key: "02715",
                 date: "040895"}
