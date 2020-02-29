@@ -10,4 +10,10 @@ class Enigma
     date_squared = date.to_i**2
     date_squared.to_s[-4..-1]
   end
+
+  def generate_dictionary
+    keys = (1..27).to_a
+    values = ("a".."z").to_a << " "
+    keys.zip(values).to_h
+  end
 end
