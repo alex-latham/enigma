@@ -43,7 +43,6 @@ class EnigmaTest < Minitest::Test
                 date: "040895"}
 
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
-
     # Date.expects(:today).returns(Date.new(2015, 04, 17))
   end
 end

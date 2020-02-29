@@ -33,5 +33,9 @@ class Enigma
   end
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
+    shifts = generate_shifts(key, date)
+
+    # split_message = message.scan(/.{1,4}/)
+    message.each_char
   end
 end
