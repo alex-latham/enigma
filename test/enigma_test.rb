@@ -11,10 +11,10 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_a_key
-    assert_instance_of String, @enigma.generate_key
-    assert_equal 5, @enigma.generate_key.length
-    @enigma.generate_key.each_char do |character|
-      assert_instance_of Integer, character
-    end
+    key = @enigma.generate_key
+
+    assert_instance_of String, key
+    assert_equal 5, key.length
+    assert key.match(/^(\d)+$/)
   end
 end
