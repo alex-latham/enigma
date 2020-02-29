@@ -8,9 +8,7 @@ class Enigma
   end
 
   def generate_dictionary
-    keys = (1..27).to_a
     values = ("a".."z").to_a << " "
-    keys.zip(values).to_h
   end
 
   def generate_key
@@ -36,6 +34,12 @@ class Enigma
     shifts = generate_shifts(key, date)
 
     # split_message = message.scan(/.{1,4}/)
-    message.each_char
+    encrypted_message = String.new
+    message.each_char do |char|
+      require 'pry'; binding.pry
+      @dictionary.index(char)
+      encrypted_message += @dictionary.rotate()
+
+    end
   end
 end
