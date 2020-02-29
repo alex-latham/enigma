@@ -27,13 +27,12 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_shifts
-    expected = {a: 7, b: 19, c: 12, d: 38}
+    expected = {a: 7, b: 19, c: 12, d: 11}
 
     assert_equal expected, @enigma.generate_shifts("01032", "031886")
   end
 
   def test_it_can_encrypt
-    skip
     expected = {encryption: "keder ohulw",
                 key: "02715",
                 date: "040895"}
