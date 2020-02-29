@@ -1,4 +1,5 @@
 require_relative 'test_helper'
+require 'date'
 require './lib/enigma'
 
 class EnigmaTest < Minitest::Test
@@ -15,12 +16,16 @@ class EnigmaTest < Minitest::Test
 
     assert_instance_of String, key
     assert_equal 5, key.length
-    assert key.match(/^(\d)+$/)
+    assert_equal true, key.match?(/^(\d)+$/)
   end
 
   def test_it_can_generate_an_offset
-    offset = @enigma.generate_offset("040895")
+    offset1 = @enigma.generate_offset("040895")
 
-    assert_equal 1025, offset
+    Date.expects(:today).returns(Date.new(2000, 01, 01))
+    offset2 = @enigma.generate_offset
+
+    assert_equal "1025", offset1
+    assert_equal "0000", offset2
   end
 end
