@@ -44,8 +44,8 @@ class Enigma
   end
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
-    encrypt_message(message, key, date)
+    {encryption: encrypt_message(message, key, date),
+     key: key,
+     date: date}
   end
-
-
 end
