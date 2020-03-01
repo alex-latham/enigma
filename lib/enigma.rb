@@ -51,14 +51,15 @@ class Enigma
      date: date}
   end
 
-  # def decrypt_string(cipher, key, date)
-  #   shifts = generate_shifts(key, date)
-  #   message = String.new
-  # end
+  def decrypt_string(cipher, key, date)
+    shifts = generate_shifts(key, date)
+    message = String.new
+  end
 
   def decrypt(cipher, key, date)
     {decryption: decrypt_string(cipher, key, date),
      key: key,
      date: date}
   end
+
 end
