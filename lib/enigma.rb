@@ -4,7 +4,7 @@ class Enigma
   attr_reader :dictionary
 
   def initialize
-    @dictionary = values = ("a".."z").to_a << " "
+    @dictionary = ("a".."z").to_a << " "
   end
 
   def generate_key
@@ -19,10 +19,8 @@ class Enigma
 
   def generate_shifts(key, date)
     keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
-
     offset = generate_offset(date)
     offsets = {a: offset[0], b: offset[1], c: offset[2], d: offset[3]}
-
     keys.merge(offsets) { |_, shift, offset| shift.to_i + offset.to_i }
   end
 
@@ -36,15 +34,19 @@ class Enigma
 
   def encrypt_string(message, key, date)
     shifts = generate_shifts(key, date)
-    encrypted_message = String.new
+    cipher = String.new
     message.each_char.with_index do |char, index|
-      encrypted_message += @dictionary[shifted_char_index(char, index, shifts)]
+      if @dictionary.include?(char)
+        cipher += @dictionary[shifted_char_index(char, index, shifts)]
+      else
+        cipher += char
+      end
     end
-    encrypted_message
+    cipher
   end
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
-    {encryption: encrypt_string(message, key, date),
+    {encryption: encrypt_string(message.downcase, key, date),
      key: key,
      date: date}
   end
