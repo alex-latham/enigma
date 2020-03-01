@@ -4,11 +4,7 @@ class Enigma
   attr_reader :dictionary
 
   def initialize
-    @dictionary = generate_dictionary
-  end
-
-  def generate_dictionary
-    values = ("a".."z").to_a << " "
+    @dictionary = values = ("a".."z").to_a << " "
   end
 
   def generate_key
@@ -30,16 +26,11 @@ class Enigma
     keys.merge(offsets) { |_, shift, offset| shift.to_i + offset.to_i }
   end
 
-  def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
-    shifts = generate_shifts(key, date)
-
-    # split_message = message.scan(/.{1,4}/)
-    encrypted_message = String.new
-    message.each_char do |char|
-      require 'pry'; binding.pry
-      @dictionary.index(char)
-      encrypted_message += @dictionary.rotate()
-
-    end
+  def shifted_char_index(char, index, shifts)
+    char_index = @dictionary.index(char)
+    return (char_index + shifts[:a]) % 27 if index % 4 == 0
+    return (char_index + shifts[:b]) % 27 if index % 4 == 1
+    return (char_index + shifts[:c]) % 27 if index % 4 == 2
+    return (char_index + shifts[:d]) % 27 if index % 4 == 3
   end
 end
