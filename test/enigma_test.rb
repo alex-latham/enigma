@@ -31,7 +31,11 @@ class EnigmaTest < Minitest::Test
   def test_it_can_generate_shifts
     expected = {a: 3, b: 27, c: 73, d: 20}
 
-    assert_equal expected, @enigma.generate_shifts("02715", "040895")
+    assert_equal expected, @enigma.generate_shifts("02715", "040895", +1)
+
+    expected = {a: -3, b: -27, c: -73, d: -20}
+
+    assert_equal expected, @enigma.generate_shifts("02715", "040895", -1)
   end
 
   def test_it_can_shift_the_dictionary
@@ -43,12 +47,14 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.shifted_dictionary(14, shifts)
   end
 
-  def test_it_can_encrypt_a_string
+  def test_it_can_mutate_a_string
     message = "hello world"
+    cipher = "keder ohulw"
     key = "02715"
     date = "040895"
 
-    assert_equal "keder ohulw", @enigma.encrypt_string(message, key, date)
+    assert_equal cipher, @enigma.mutate_string(message, key, date, +1)
+    assert_equal message, @enigma.mutate_string(cipher, key, date, -1)
   end
 
   def test_it_can_encrypt
@@ -66,16 +72,7 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.encrypt("hello world!")
   end
 
-  def test_it_can_decrypt_a_string
-    cipher = "keder ohulw"
-    key = "02715"
-    date = "040895"
-
-    assert_equal "hello world", @enigma.decrypt_string(cipher, key, date)
-  end
-
   def test_it_can_decrypt
-    skip
     expected = {decryption: "hello world",
                 key: "02715",
                 date: "040895"}
