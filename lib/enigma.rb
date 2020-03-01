@@ -8,8 +8,7 @@ class Enigma
   end
 
   def generate_key
-    unpadded_key = rand(99999).to_s
-    "0" * (5 - unpadded_key.length) + unpadded_key
+    rand(99999).to_s.rjust(5, "0")
   end
 
   def generate_offset(date)
