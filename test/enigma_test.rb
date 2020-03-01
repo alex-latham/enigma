@@ -27,16 +27,19 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_shifts
-    expected = {a: 7, b: 19, c: 12, d: 38}
+    expected = {a: 3, b: 27, c: 73, d: 20}
 
-    assert_equal expected, @enigma.generate_shifts("01032", "031886")
+    assert_equal expected, @enigma.generate_shifts("02715", "040895")
   end
 
   def test_it_can_find_shifted_character_indices
-    skip
+    shifts = {a: 3, b: 27, c: 73, d: 20}
+
+    assert_equal 10, @enigma.shifted_char_index("h", 0, shifts)
   end
 
   def test_it_can_encrypt
+    skip
     expected = {encryption: "keder ohulw",
                 key: "02715",
                 date: "040895"}
