@@ -34,11 +34,13 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.generate_shifts("02715", "040895")
   end
 
-  def test_it_can_find_shifted_character_indices
+  def test_it_can_shift_the_dictionary
     shifts = {a: 3, b: 27, c: 73, d: 20}
+    expected = ["t", "u", "v", "w", "x", "y", "z", " ", "a", "b", "c", "d",
+                "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                "q", "r", "s"]
 
-    assert_equal 10, @enigma.shifted_char_index("h", 0, shifts)
-    assert_equal 4, @enigma.shifted_char_index("l", 3, shifts)
+    assert_equal expected, @enigma.shifted_dictionary(14, shifts)
   end
 
   def test_it_can_encrypt_a_string
@@ -65,7 +67,8 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_decrypt_a_string
-    cipher = keder ohulw
+    skip
+    cipher = "keder ohulw"
     key = "02715"
     date = "040895"
 
@@ -73,6 +76,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_decrypt
+    skip
     expected = {decryption: "hello world",
                 key: "02715",
                 date: "040895"}
