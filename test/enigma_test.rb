@@ -38,7 +38,16 @@ class EnigmaTest < Minitest::Test
     assert_equal 10, @enigma.shifted_char_index("h", 0, shifts)
   end
 
+  def test_it_can_encyrpt_a_string
+    message = "hello world"
+    key = "02715"
+    date = "040895"
+
+    assert_equal "keder ohulw", @enigma.encrypt_message(message, key, date)
+  end
+
   def test_it_can_encrypt
+    skip
     expected = {encryption: "keder ohulw",
                 key: "02715",
                 date: "040895"}
