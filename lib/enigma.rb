@@ -25,7 +25,7 @@ class Enigma
     end
   end
 
-  def shifted_charset(index, shifts)
+  def shift_charset(index, shifts)
     return @charset.rotate(shifts[:a]) if index % 4 == 0
     return @charset.rotate(shifts[:b]) if index % 4 == 1
     return @charset.rotate(shifts[:c]) if index % 4 == 2
@@ -34,15 +34,15 @@ class Enigma
 
   def mutate_string(string, key, date, dir)
     shifts = generate_shifts(key, date, dir)
-    mutant_str = String.new
+    mutated_string = String.new
     string.each_char.with_index do |char, index|
       if @charset.include?(char)
-        mutant_str += shifted_charset(index, shifts)[@charset.index(char)]
+        mutated_string += shift_charset(index, shifts)[@charset.index(char)]
       else
-        mutant_str += char
+        mutated_string += char
       end
     end
-    mutant_str
+    mutated_string
   end
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))

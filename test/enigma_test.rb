@@ -44,7 +44,7 @@ class EnigmaTest < Minitest::Test
                 "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
                 "q", "r", "s"]
 
-    assert_equal expected, @enigma.shifted_charset(14, shifts)
+    assert_equal expected, @enigma.shift_charset(14, shifts)
   end
 
   def test_it_can_mutate_a_string
