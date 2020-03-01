@@ -57,10 +57,10 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.encrypt("Hello World!", "02715", "040895")
 
     Date.expects(:today).returns(Date.new(1995, 8, 4))
-    assert_equal expected, @enigma.encrypt("hello world", "02715")
+    assert_equal expected, @enigma.encrypt("hello world!", "02715")
 
     Date.expects(:today).returns(Date.new(1995, 8, 4))
     @enigma.stubs(:rand).returns(2715)
-    assert_equal expected, @enigma.encrypt("hello world")
+    assert_equal expected, @enigma.encrypt("hello world!")
   end
 end
