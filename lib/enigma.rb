@@ -1,10 +1,10 @@
 require 'date'
 
 class Enigma
-  attr_reader :dictionary
+  attr_reader :charset
 
   def initialize
-    @dictionary = ("a".."z").to_a << " "
+    @charset = ("a".."z").to_a << " "
   end
 
   def generate_key
@@ -20,27 +20,29 @@ class Enigma
     keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
     offset = generate_offset(date)
     offsets = {a: offset[0], b: offset[1], c: offset[2], d: offset[3]}
-    keys.merge(offsets) { |_, shift, offset| dir * (shift.to_i + offset.to_i) }
+    keys.merge(offsets) do |_, key_shift, offset_shift|
+      dir * (key_shift.to_i + offset_shift.to_i)
+    end
   end
 
-  def shifted_dictionary(index, shifts)
-    return @dictionary.rotate(shifts[:a]) if index % 4 == 0
-    return @dictionary.rotate(shifts[:b]) if index % 4 == 1
-    return @dictionary.rotate(shifts[:c]) if index % 4 == 2
-    return @dictionary.rotate(shifts[:d]) if index % 4 == 3
+  def shifted_charset(index, shifts)
+    return @charset.rotate(shifts[:a]) if index % 4 == 0
+    return @charset.rotate(shifts[:b]) if index % 4 == 1
+    return @charset.rotate(shifts[:c]) if index % 4 == 2
+    return @charset.rotate(shifts[:d]) if index % 4 == 3
   end
 
   def mutate_string(string, key, date, dir)
     shifts = generate_shifts(key, date, dir)
-    mutant = String.new
+    mutant_str = String.new
     string.each_char.with_index do |char, index|
-      if @dictionary.include?(char)
-        mutant += shifted_dictionary(index, shifts)[@dictionary.index(char)]
+      if @charset.include?(char)
+        mutant_str += shifted_charset(index, shifts)[@charset.index(char)]
       else
-        mutant += char
+        mutant_str += char
       end
     end
-    mutant
+    mutant_str
   end
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))

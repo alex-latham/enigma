@@ -11,12 +11,12 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    dictionary = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+    charset = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
                   "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
                   "y", "z", " "]
 
 
-    assert_equal dictionary, @enigma.dictionary
+    assert_equal charset, @enigma.charset
   end
 
   def test_it_can_generate_a_key
@@ -44,7 +44,7 @@ class EnigmaTest < Minitest::Test
                 "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
                 "q", "r", "s"]
 
-    assert_equal expected, @enigma.shifted_dictionary(14, shifts)
+    assert_equal expected, @enigma.shifted_charset(14, shifts)
   end
 
   def test_it_can_mutate_a_string
