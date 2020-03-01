@@ -34,7 +34,7 @@ class Enigma
     return (char_index + shifts[:d]) % 27 if index % 4 == 3
   end
 
-  def encrypt_message(message, key, date)
+  def encrypt_string(message, key, date)
     shifts = generate_shifts(key, date)
     encrypted_message = String.new
     message.each_char.with_index do |char, index|
@@ -44,7 +44,7 @@ class Enigma
   end
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
-    {encryption: encrypt_message(message, key, date),
+    {encryption: encrypt_string(message, key, date),
      key: key,
      date: date}
   end

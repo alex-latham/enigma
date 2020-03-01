@@ -36,14 +36,15 @@ class EnigmaTest < Minitest::Test
     shifts = {a: 3, b: 27, c: 73, d: 20}
 
     assert_equal 10, @enigma.shifted_char_index("h", 0, shifts)
+    assert_equal 4, @enigma.shifted_char_index("l", 3, shifts)
   end
 
-  def test_it_can_encyrpt_a_string
+  def test_it_can_encrypt_a_string
     message = "hello world"
     key = "02715"
     date = "040895"
 
-    assert_equal "keder ohulw", @enigma.encrypt_message(message, key, date)
+    assert_equal "keder ohulw", @enigma.encrypt_string(message, key, date)
   end
 
   def test_it_can_encrypt
@@ -52,6 +53,12 @@ class EnigmaTest < Minitest::Test
                 date: "040895"}
 
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
-    # Date.expects(:today).returns(Date.new(2015, 04, 17))
+
+    Date.expects(:today).returns(Date.new(1995, 8, 4))
+    assert_equal expected, @enigma.encrypt("hello world", "02715")
+
+    Date.expects(:today).returns(Date.new(1995, 8, 4))
+    @enigma.stubs(:rand).returns(2715)
+    assert_equal expected, @enigma.encrypt("hello world")
   end
 end
