@@ -24,20 +24,20 @@ class Enigma
     keys.merge(offsets) { |_, shift, offset| shift.to_i + offset.to_i }
   end
 
-  def shifted_char_index(char, index, shifts)
-    char_index = @dictionary.index(char)
-    return (char_index + shifts[:a]) % 27 if index % 4 == 0
-    return (char_index + shifts[:b]) % 27 if index % 4 == 1
-    return (char_index + shifts[:c]) % 27 if index % 4 == 2
-    return (char_index + shifts[:d]) % 27 if index % 4 == 3
+  def shifted_dictionary(index, shifts)
+    return @dictionary.rotate(shifts[:a]) if index % 4 == 0
+    return @dictionary.rotate(shifts[:b]) if index % 4 == 1
+    return @dictionary.rotate(shifts[:c]) if index % 4 == 2
+    return @dictionary.rotate(shifts[:d]) if index % 4 == 3
   end
 
   def encrypt_string(message, key, date)
     shifts = generate_shifts(key, date)
     cipher = String.new
+
     message.each_char.with_index do |char, index|
       if @dictionary.include?(char)
-        cipher += @dictionary[shifted_char_index(char, index, shifts)]
+        cipher += shifted_dictionary(index, shifts)[@dictionary.index(char)]
       else
         cipher += char
       end
@@ -47,6 +47,17 @@ class Enigma
 
   def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
     {encryption: encrypt_string(message.downcase, key, date),
+     key: key,
+     date: date}
+  end
+
+  # def decrypt_string(cipher, key, date)
+  #   shifts = generate_shifts(key, date)
+  #   message = String.new
+  # end
+
+  def decrypt(cipher, key, date)
+    {decryption: decrypt_string(cipher, key, date),
      key: key,
      date: date}
   end

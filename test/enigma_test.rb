@@ -63,4 +63,20 @@ class EnigmaTest < Minitest::Test
     @enigma.stubs(:rand).returns(2715)
     assert_equal expected, @enigma.encrypt("hello world!")
   end
+
+  def test_it_can_decrypt_a_string
+    cipher = keder ohulw
+    key = "02715"
+    date = "040895"
+
+    assert_equal "hello world", @enigma.decrypt_string(cipher, key, date)
+  end
+
+  def test_it_can_decrypt
+    expected = {decryption: "hello world",
+                key: "02715",
+                date: "040895"}
+
+    assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+  end
 end
