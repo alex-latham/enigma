@@ -88,18 +88,17 @@ class Enigma
     cracked_keys.values
   end
 
+  def keys_pattern?(key)
+    key[0][1] == key[1][0] && key[1][1] == key[2][0] && key[2][1] == key[3][0]
+  end
+
   def normalize_keys(cracked_keys)
     # develop key matching pairing pattern
-    require 'pry'; binding.pry
-
-
-    # prelim_keys = prelim_keys.values
-    # keys_string = cracked_keys.map { |key| key.to_s.rjust(2, "0") }
-    #
-    # prelim_keys = positive_keys.transform_values do |key|
-    #   key.to_s.rjust(2, "0")
-    # end
-    #
-    # require 'pry'; binding.pry
+    until keys_pattern? do
+      key[0].to_i
+      key[1].to_i
+      key[2].to_i
+      key[3].to_i
+    end
   end
 end
