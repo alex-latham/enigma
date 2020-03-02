@@ -1,3 +1,5 @@
 coverage
 .DS_store
 runner.rb
+encrypted.txt
+decrypted.txt

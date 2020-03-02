@@ -1,0 +1,28 @@
+The main focus of Turing’s work at Bletchley was in cracking the ‘Enigma’ code.
+The Enigma was a type of enciphering machine used by the German armed forces to
+send messages securely. Although Polish mathematicians had worked out how to
+read Enigma messages and had shared this information with the British, the
+Germans increased its security at the outbreak of war by changing the cipher
+system daily. This made the task of understanding the code even more difficult.
+
+Turing played a key role in this, inventing – along with fellow code-breaker
+Gordon Welchman – a machine known as the Bombe. This device helped to
+significantly reduce the work of the code-breakers. From mid-1940, German Air
+Force signals were being read at Bletchley and the intelligence gained from
+them was helping the war effort.
+
+In 1952, Alan Turing was arrested for homosexuality – which was then illegal in
+Britain. He was found guilty of ‘gross indecency’ (this conviction was
+overturned in 2013) but avoided a prison sentence by accepting chemical
+castration. In 1954, he was found dead from cyanide poisoning. An inquest ruled
+that it was suicide.
+
+The legacy of Alan Turing’s life and work did not fully come to light until
+long after his death. His impact on computer science has been widely
+acknowledged: the annual ‘Turing Award’ has been the highest accolade in that
+industry since 1966. But the work of Bletchley Park – and Turing’s role there
+in cracking the Enigma code – was kept secret until the 1970s, and the full
+story was not known until the 1990s. It has been estimated that the efforts of
+Turing and his fellow code-breakers shortened the war by several years. What is
+certain is that they saved countless lives and helped to determine the course
+and outcome of the conflict.

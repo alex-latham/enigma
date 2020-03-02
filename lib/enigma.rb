@@ -50,12 +50,14 @@ class Enigma
   end
 
   def encrypt(plaintext, key = generate_key, date = generate_today_date)
+    key = generate_key if key == nil
+    date = generate_today_date if date  == nil
     {encryption: mutate_string(plaintext.downcase, key, date, +1),
      key: key,
      date: date}
   end
 
-  def decrypt(ciphertext, key, date = Date.today.strftime("%d%m%y"))
+  def decrypt(ciphertext, key, date = generate_today_date)
     {decryption: mutate_string(ciphertext, key, date, -1),
      key: key,
      date: date}
