@@ -55,7 +55,7 @@ class Enigma
      date: date}
   end
 
-  def decrypt(ciphertext, key, date = Date.today.strftime("%d%m%y"))
+  def decrypt(ciphertext, key, date = generate_today_date)
     {decryption: mutate_string(ciphertext, key, date, -1),
      key: key,
      date: date}
