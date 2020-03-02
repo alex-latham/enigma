@@ -33,11 +33,11 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_shifts
-    expected = {a: 3, b: 0, c: 19, d: 20}
+    expected = {a: 3, b: 27, c: 73, d: 20}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", +1)
 
-    expected = {a: 24, b: 0, c: 8, d: 7}
+    expected = {a: -3, b: -27, c: -73, d: -20}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", -1)
   end
@@ -88,7 +88,21 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_crack_shifts
-    assert_equal ({a: 19, b: -14, c: -11, d: -7}), @enigma.crack_shifts("hsyk")
+    assert_equal ({a: 10, b: 3, c: 3, d: 8}), @enigma.crack_shifts("jhql")
+  end
+
+  def test_it_can_crack_keys
+    shifts = @enigma.crack_shifts("jhql")
+    expected = {a: 8, b: -1, c: 3, d: 8}
+
+    assert_equal expected, @enigma.crack_keys("020320",shifts)
+  end
+
+  def test_it_can_normalize_keys
+    expected = {a: 8, b: 80, c: 3, d: 35}
+    cracked_keys = @enigma.crack_keys("020320",shifts)
+
+    assert_equal expected, @enigma.normalize_keys(cracked_keys)
   end
 
   def test_it_can_crack
