@@ -11,12 +11,17 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    dictionary = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+    charset = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
                   "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
                   "y", "z", " "]
 
 
-    assert_equal dictionary, @enigma.dictionary
+    assert_equal charset, @enigma.charset
+  end
+
+  def test_it_can_generate_today_date
+    Date.expects(:today).returns(Date.new(1995, 8, 4))
+    assert_equal "040895", @enigma.generate_today_date
   end
 
   def test_it_can_generate_a_key
@@ -29,32 +34,32 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_shifts
-    expected = {a: 3, b: 27, c: 73, d: 20}
+    expected = {a: 3, b: 0, c: 19, d: 20}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", +1)
 
-    expected = {a: -3, b: -27, c: -73, d: -20}
+    expected = {a: 24, b: 0, c: 8, d: 7}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", -1)
   end
 
-  def test_it_can_shift_the_dictionary
+  def test_it_can_shift_the_charset
     shifts = {a: 3, b: 27, c: 73, d: 20}
     expected = ["t", "u", "v", "w", "x", "y", "z", " ", "a", "b", "c", "d",
                 "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
                 "q", "r", "s"]
 
-    assert_equal expected, @enigma.shifted_dictionary(14, shifts)
+    assert_equal expected, @enigma.shift_charset(14, shifts)
   end
 
   def test_it_can_mutate_a_string
-    message = "hello world"
-    cipher = "keder ohulw"
+    plaintext = "hello world"
+    ciphertext = "keder ohulw"
     key = "02715"
     date = "040895"
 
-    assert_equal cipher, @enigma.mutate_string(message, key, date, +1)
-    assert_equal message, @enigma.mutate_string(cipher, key, date, -1)
+    assert_equal ciphertext, @enigma.mutate_string(plaintext, key, date, +1)
+    assert_equal plaintext, @enigma.mutate_string(ciphertext, key, date, -1)
   end
 
   def test_it_can_encrypt

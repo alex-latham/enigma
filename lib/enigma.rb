@@ -1,10 +1,14 @@
 require 'date'
 
 class Enigma
-  attr_reader :dictionary
+  attr_reader :charset
 
   def initialize
-    @dictionary = ("a".."z").to_a << " "
+    @charset = ("a".."z").to_a << " "
+  end
+
+  def generate_today_date
+    Date.today.strftime("%d%m%y")
   end
 
   def generate_key
@@ -16,41 +20,43 @@ class Enigma
     date_squared.to_s[-4..-1]
   end
 
-  def generate_shifts(key, date, dir)
+  def generate_shifts(key, date, direction)
     keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
     offset = generate_offset(date)
     offsets = {a: offset[0], b: offset[1], c: offset[2], d: offset[3]}
-    keys.merge(offsets) { |_, shift, offset| dir * (shift.to_i + offset.to_i) }
+    keys.merge(offsets) do |_, key_shift, offset_shift|
+      ((key_shift.to_i + offset_shift.to_i) * direction ) % 27
+    end
   end
 
-  def shifted_dictionary(index, shifts)
-    return @dictionary.rotate(shifts[:a]) if index % 4 == 0
-    return @dictionary.rotate(shifts[:b]) if index % 4 == 1
-    return @dictionary.rotate(shifts[:c]) if index % 4 == 2
-    return @dictionary.rotate(shifts[:d]) if index % 4 == 3
+  def shift_charset(index, shifts)
+    return @charset.rotate(shifts[:a]) if index % 4 == 0
+    return @charset.rotate(shifts[:b]) if index % 4 == 1
+    return @charset.rotate(shifts[:c]) if index % 4 == 2
+    return @charset.rotate(shifts[:d]) if index % 4 == 3
   end
 
-  def mutate_string(string, key, date, dir)
-    shifts = generate_shifts(key, date, dir)
-    mutant = String.new
+  def mutate_string(string, key, date, direction)
+    shifts = generate_shifts(key, date, direction)
+    mutated_string = String.new
     string.each_char.with_index do |char, index|
-      if @dictionary.include?(char)
-        mutant += shifted_dictionary(index, shifts)[@dictionary.index(char)]
+      if @charset.include?(char)
+        mutated_string += shift_charset(index, shifts)[@charset.index(char)]
       else
-        mutant += char
+        mutated_string += char
       end
     end
-    mutant
+    mutated_string
   end
 
-  def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
-    {encryption: mutate_string(message.downcase, key, date, +1),
+  def encrypt(plaintext, key = generate_key, date = generate_today_date)
+    {encryption: mutate_string(plaintext.downcase, key, date, +1),
      key: key,
      date: date}
   end
 
-  def decrypt(cipher, key, date)
-    {decryption: mutate_string(cipher, key, date, -1),
+  def decrypt(ciphertext, key, date = Date.today.strftime("%d%m%y"))
+    {decryption: mutate_string(ciphertext, key, date, -1),
      key: key,
      date: date}
   end
