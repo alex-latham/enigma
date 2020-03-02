@@ -62,4 +62,38 @@ class Enigma
      key: key,
      date: date}
   end
+
+  def crack(ciphertext, date = generate_today_date)
+    # shif ["x", "x", "x", "x"] length 4 => d_char_modulus 0
+    # orig [" ", "e", "n", "d"]
+    # indx [ -4,  -3,  -2,  -1]
+    d_shift = @charset.index(ciphertext[-1]) - 3
+    n_shift = @charset.index(ciphertext[-2]) - 13
+    e_shift = @charset.index(ciphertext[-3]) - 4
+    space_shift = @charset.index(ciphertext[-3]) - 27
+    shift_values = [space_shift, e_shift, n_shift, d_shift]
+    shift_keys = [:a, :b, :c, :d]
+    if ciphertext.length % 4  == 0
+      shifts = shift_keys.zip(shift_values).to_h
+      # shift_d = d_shift
+      # shift_c = n_shift
+      # shift_b = e_shift
+      # shift_a = space_shift
+    elsif last_index % 4 == 1
+      shifts = shift_keys.zip(shift_values.rotate).to_h
+      # shift_a = d_shift
+      # shift_d = n_shift
+      # shift_c = e_shift
+      # shift_b = space_shift
+    elsif last_index % 4 == 2
+      # shift_b = d_shift
+      # shift_a = n_shift
+      # shift_d = e_shift
+      # shift_c = space_shift
+    elsif last_index % 4 == 2
+      # shift_c = d_shift
+      # shift_b = n_shift
+      # shift_a = e_shift
+      # shift_d = space_shift
+  end
 end
