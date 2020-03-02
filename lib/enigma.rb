@@ -88,17 +88,22 @@ class Enigma
     cracked_keys.values
   end
 
-  def keys_pattern?(key)
-    key[0][1] == key[1][0] && key[1][1] == key[2][0] && key[2][1] == key[3][0]
-  end
+  # def keys_pattern?(key)
+  #   key[0][1] == key[1][0] && key[1][1] == key[2][0] && key[2][1] == key[3][0]
+  # end
 
-  def normalize_keys(cracked_keys)
+  def crack_key(keys)
     # develop key matching pairing pattern
-    until keys_pattern? do
-      key[0].to_i
-      key[1].to_i
-      key[2].to_i
-      key[3].to_i
+    until keys[0][1] == keys[1][0]
+      keys[1] = (keys[1].to_i + 27).to_s.rjust(2, "0")
     end
+    until keys[1][1] == keys[2][0]
+      keys[2] = (keys[2].to_i + 27).to_s.rjust(2, "0")
+    end
+    until keys[2][1] == keys[3][0]
+      keys[3] = (keys[3].to_i + 27).to_s.rjust(2, "0")
+    end
+    keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
+    # {a: keys[0].to_i, b: keys[1].to_i, c: keys[2].to_i, d: keys[3].to_i}
   end
 end

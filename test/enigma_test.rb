@@ -99,6 +99,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_check_keys_against_pattern
+    skip
     key1 = ["08", "80", "03", "35"]
     key2 = ["03", "04", "03", "25"]
 
@@ -106,16 +107,14 @@ class EnigmaTest < Minitest::Test
     assert_equal false, @enigma.keys_pattern?(key2)
   end
 
-  def test_it_can_normalize_keys
-    skip
+  def test_it_can_crack_key
     shifts = @enigma.crack_shifts("jhql")
     cracked_keys = @enigma.crack_keys("020320",shifts)
 
-    expected = {a: 8, b: 80, c: 3, d: 35}
+    expected = "08035"
 
-    assert_equal expected, @enigma.normalize_keys(cracked_keys)
+    assert_equal expected, @enigma.crack_key(cracked_keys)
   end
-
 
   def test_it_can_crack
     skip
