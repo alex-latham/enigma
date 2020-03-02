@@ -19,6 +19,11 @@ class EnigmaTest < Minitest::Test
     assert_equal charset, @enigma.charset
   end
 
+  def test_it_can_generate_today_date
+    Date.expects(:today).returns(Date.new(1995, 8, 4))
+    assert_equal "040895", @enigma.generate_today_date
+  end
+
   def test_it_can_generate_a_key
     @enigma.stubs(:rand).returns(923)
     assert_equal "00923", @enigma.generate_key
@@ -48,13 +53,13 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_mutate_a_string
-    message = "hello world"
+    plaintext = "hello world"
     ciphertext = "keder ohulw"
     key = "02715"
     date = "040895"
 
-    assert_equal ciphertext, @enigma.mutate_string(message, key, date, +1)
-    assert_equal message, @enigma.mutate_string(ciphertext, key, date, -1)
+    assert_equal ciphertext, @enigma.mutate_string(plaintext, key, date, +1)
+    assert_equal plaintext, @enigma.mutate_string(ciphertext, key, date, -1)
   end
 
   def test_it_can_encrypt

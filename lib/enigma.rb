@@ -7,6 +7,10 @@ class Enigma
     @charset = ("a".."z").to_a << " "
   end
 
+  def generate_today_date
+    Date.today.strftime("%d%m%y")
+  end
+
   def generate_key
     rand(99999).to_s.rjust(5, "0")
   end
@@ -45,8 +49,8 @@ class Enigma
     mutated_string
   end
 
-  def encrypt(message, key = generate_key, date = Date.today.strftime("%d%m%y"))
-    {encryption: mutate_string(message.downcase, key, date, +1),
+  def encrypt(plaintext, key = generate_key, date = generate_today_date)
+    {encryption: mutate_string(plaintext.downcase, key, date, +1),
      key: key,
      date: date}
   end
