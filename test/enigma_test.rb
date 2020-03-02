@@ -49,12 +49,12 @@ class EnigmaTest < Minitest::Test
 
   def test_it_can_mutate_a_string
     message = "hello world"
-    cipher = "keder ohulw"
+    ciphertext = "keder ohulw"
     key = "02715"
     date = "040895"
 
-    assert_equal cipher, @enigma.mutate_string(message, key, date, +1)
-    assert_equal message, @enigma.mutate_string(cipher, key, date, -1)
+    assert_equal ciphertext, @enigma.mutate_string(message, key, date, +1)
+    assert_equal message, @enigma.mutate_string(ciphertext, key, date, -1)
   end
 
   def test_it_can_encrypt
