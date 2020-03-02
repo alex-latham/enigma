@@ -6,7 +6,7 @@ encrypted = File.open(ARGV[1], "w")
 
 enigma = Enigma.new
 
-encryption_data = enigma.encrypt(plaintext)
+encryption_data = enigma.encrypt(plaintext, ARGV[2], ARGV[3])
 encrypted.write(encryption_data[:encryption])
 encrypted.close
 
