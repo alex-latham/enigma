@@ -28,8 +28,8 @@ class EnigmaTest < Minitest::Test
     assert_equal "00923", @enigma.generate_key
   end
 
-  def test_it_can_generate_an_offset
-    assert_equal "1025", @enigma.generate_offset("040895")
+  def test_it_can_generate_offsets
+    assert_equal ({a: "1", b: "0", c: "2", d: "5"}), @enigma.generate_offsets("040895")
   end
 
   def test_it_can_generate_shifts
@@ -57,8 +57,11 @@ class EnigmaTest < Minitest::Test
     key = "02715"
     date = "040895"
 
-    assert_equal ciphertext, @enigma.mutate_string(plaintext, key, date, +1)
-    assert_equal plaintext, @enigma.mutate_string(ciphertext, key, date, -1)
+    shifts = @enigma.generate_shifts(key, date, +1)
+    assert_equal ciphertext, @enigma.mutate_string(plaintext, shifts)
+
+    shifts = @enigma.generate_shifts(key, date, -1)
+    assert_equal plaintext, @enigma.mutate_string(ciphertext, shifts)
   end
 
   def test_it_can_encrypt
@@ -84,10 +87,15 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
   end
 
+  def test_it_can_crack_shifts
+    assert_equal ({a: 19, b: -14, c: -11, d: -7}), @enigma.crack_shifts("hsyk")
+  end
+
   def test_it_can_crack
-    expected = {decryption: "hello world",
-                key: "???",
-                date: "291018"}
+    skip
+    expected = {decryption: "hello world end",
+                date: "291018",
+                key: "08304"}
 
     assert_equal expected, @enigma.crack("vjqtbeaweqihssi", "291018")
 
