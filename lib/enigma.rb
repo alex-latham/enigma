@@ -25,7 +25,7 @@ class Enigma
     keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
     offsets = generate_offsets(date)
     keys.merge(offsets) do |_, key_shift, offset_shift|
-      ((key_shift.to_i + offset_shift.to_i) * direction ) % 27
+      (key_shift.to_i + offset_shift.to_i) * direction
     end
   end
 
@@ -65,28 +65,41 @@ class Enigma
   end
 
   def crack(ciphertext, date = generate_today_date)
-    offsets = generate_offsets(date)
     shifts = crack_shifts(ciphertext)
     {decryption: mutate_string(ciphertext, shifts),
-     key: key_generator(date, shifts),
-     date: date}
+     date: date,
+     key: key_generator(date, shifts)}
   end
 
   def crack_shifts(ciphertext)
-    d_shift = 3 - @charset.index(ciphertext[-1])
-    n_shift = 13 - @charset.index(ciphertext[-2])
-    e_shift = 4 - @charset.index(ciphertext[-3])
-    space_shift = 26 - @charset.index(ciphertext[-4])
+    d_shift = (@charset.index(ciphertext[-1]) - 3) % 27
+    n_shift = (@charset.index(ciphertext[-2]) - 13) % 27
+    e_shift = (@charset.index(ciphertext[-3]) - 4) % 27
+    space_shift = (@charset.index(ciphertext[-4]) - 26) % 27
     shift_values = [space_shift, e_shift, n_shift, d_shift]
-    shift_keys = [:a, :b, :c, :d]
-    index_positions = ciphertext.length - 1
-    rotations = ciphertext.length
-    shift_keys.zip(shift_values.rotate(rotations)).to_h
+    [:a, :b, :c, :d].zip(shift_values.rotate(ciphertext.length % 4)).to_h
   end
 
-  def key_generator(date, shifts)
-    shifts = shifts.merge(offsets) do |_, shift, offset|
-      shift.to_i - offset.to_i
+  def crack_keys(date, shifts)
+    offsets = generate_offsets(date)
+    cracked_keys = shifts.merge(offsets) do |_, shift, offset_shift|
+      ((shift - offset_shift.to_i) % 27).to_s.rjust(2, "0")
     end
+    cracked_keys.values
+  end
+
+  def normalize_keys(cracked_keys)
+    # develop key matching pairing pattern
+    require 'pry'; binding.pry
+
+
+    # prelim_keys = prelim_keys.values
+    # keys_string = cracked_keys.map { |key| key.to_s.rjust(2, "0") }
+    #
+    # prelim_keys = positive_keys.transform_values do |key|
+    #   key.to_s.rjust(2, "0")
+    # end
+    #
+    # require 'pry'; binding.pry
   end
 end

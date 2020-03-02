@@ -93,14 +93,17 @@ class EnigmaTest < Minitest::Test
 
   def test_it_can_crack_keys
     shifts = @enigma.crack_shifts("jhql")
-    expected = {a: 8, b: -1, c: 3, d: 8}
+    expected = ["08", "26", "03", "08"]
 
     assert_equal expected, @enigma.crack_keys("020320",shifts)
   end
 
   def test_it_can_normalize_keys
-    expected = {a: 8, b: 80, c: 3, d: 35}
+    skip
+    shifts = @enigma.crack_shifts("jhql")
     cracked_keys = @enigma.crack_keys("020320",shifts)
+
+    expected = {a: 8, b: 80, c: 3, d: 35}
 
     assert_equal expected, @enigma.normalize_keys(cracked_keys)
   end
