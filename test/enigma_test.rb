@@ -29,16 +29,16 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_generate_shifts
-    expected = {a: 3, b: 27, c: 73, d: 20}
+    expected = {a: 3, b: 0, c: 19, d: 20}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", +1)
 
-    expected = {a: -3, b: -27, c: -73, d: -20}
+    expected = {a: 24, b: 0, c: 8, d: 7}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", -1)
   end
 
-  def test_it_can_shift_the_dictionary
+  def test_it_can_shift_the_charset
     shifts = {a: 3, b: 27, c: 73, d: 20}
     expected = ["t", "u", "v", "w", "x", "y", "z", " ", "a", "b", "c", "d",
                 "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",

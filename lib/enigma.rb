@@ -16,12 +16,12 @@ class Enigma
     date_squared.to_s[-4..-1]
   end
 
-  def generate_shifts(key, date, dir)
+  def generate_shifts(key, date, direction)
     keys = {a: key[0..1], b: key[1..2], c: key[2..3], d: key[3..4]}
     offset = generate_offset(date)
     offsets = {a: offset[0], b: offset[1], c: offset[2], d: offset[3]}
     keys.merge(offsets) do |_, key_shift, offset_shift|
-      dir * (key_shift.to_i + offset_shift.to_i)
+      ((key_shift.to_i + offset_shift.to_i) * direction ) % 27
     end
   end
 
@@ -32,8 +32,8 @@ class Enigma
     return @charset.rotate(shifts[:d]) if index % 4 == 3
   end
 
-  def mutate_string(string, key, date, dir)
-    shifts = generate_shifts(key, date, dir)
+  def mutate_string(string, key, date, direction)
+    shifts = generate_shifts(key, date, direction)
     mutated_string = String.new
     string.each_char.with_index do |char, index|
       if @charset.include?(char)
