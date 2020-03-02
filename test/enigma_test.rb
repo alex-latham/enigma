@@ -15,7 +15,6 @@ class EnigmaTest < Minitest::Test
                   "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
                   "y", "z", " "]
 
-
     assert_equal charset, @enigma.charset
   end
 
