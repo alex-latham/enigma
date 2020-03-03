@@ -1,10 +1,10 @@
-require './lib/enigma'
+require './lib/encryptor'
 
 message = File.open(ARGV[0], "r")
 plaintext = message.read
 
-enigma = Enigma.new
-encryption_data = enigma.encrypt(plaintext)
+encryptor = Encryptor.new
+encryption_data = encryptor.encrypt(plaintext)
 
 encrypted = File.open(ARGV[1], "w")
 encrypted.write(encryption_data[:encryption])
