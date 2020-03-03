@@ -35,9 +35,8 @@ module Generable
     string.each_char.with_index do |char, index|
       if @charset.include?(char)
         mutated_string += shift_charset(index, shifts)[@charset.index(char)]
-      else
-        mutated_string += char
       end
+        mutated_string += char unless @charset.include?(char)
     end
     mutated_string
   end
