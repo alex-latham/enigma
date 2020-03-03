@@ -10,4 +10,5 @@ decrypted = File.open(ARGV[1], "w")
 decrypted.write(decryption_data[:decryption])
 decrypted.close
 
-p "Created '#{ARGV[1]}' with the key #{decryption_data[:key]} and date #{decryption_data[:date]}"
+p "Created '#{ARGV[1]}' with the key #{decryption_data[:key]}\
+ and date #{decryption_data[:date]}"
