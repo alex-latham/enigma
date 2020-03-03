@@ -22,7 +22,7 @@ Additionally, you will self assess your project before your evaluation. Make sur
 This tool has several tools available for use, including four command line interfaces (CLIs). An explanation for each is below:
 * *encrypt.rb*: takes two arguments--the location of an existing message file and an output location for encrypted text. Information about the encryption is returned in the CLI.
 
-  `ruby runners/encrypt.rb message.txt`
+  `ruby runners/encrypt.rb message.txt encrypted.txt`
 
 * *decrypt.rb*: takes four arguments--the location of an encrypted file, an output location for decrypted text, a five-digit encryption key, and a six-digit date in DDMMYY format. Information about the decryption is returned in the CLI.
 
