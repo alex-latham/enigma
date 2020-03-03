@@ -1,7 +1,2 @@
 coverage
 .DS_store
-Rakefile
-runner.rb
-encrypted.txt
-decrypted.txt
-cracked.txt
