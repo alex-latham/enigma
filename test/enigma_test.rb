@@ -112,7 +112,6 @@ class EnigmaTest < Minitest::Test
 
   def test_it_can_generate_cracked_key
     shifts = @enigma.crack_shifts("vjqtbeaweqihssi")
-
     expected = "08304"
 
     assert_equal expected, @enigma.crack_key("291018", shifts)
