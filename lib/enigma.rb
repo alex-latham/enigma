@@ -49,8 +49,6 @@ class Enigma
   end
 
   def encrypt(plaintext, key = generate_key, date = generate_today_date)
-    key = generate_key if key == nil
-    date = generate_today_date if date  == nil
     shifts = generate_shifts(key, date, +1)
     {encryption: mutate_string(plaintext.downcase, shifts),
      key: key,

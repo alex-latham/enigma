@@ -4,7 +4,7 @@ message = File.open(ARGV[0], "r")
 plaintext = message.read
 
 enigma = Enigma.new
-encryption_data = enigma.encrypt(plaintext, ARGV[2], ARGV[3])
+encryption_data = enigma.encrypt(plaintext)
 
 encrypted = File.open(ARGV[1], "w")
 encrypted.write(encryption_data[:encryption])
