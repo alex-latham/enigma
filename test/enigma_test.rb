@@ -28,16 +28,16 @@ class EnigmaTest < Minitest::Test
     assert_equal "00923", @enigma.generate_key
   end
 
-  def test_it_can_generate_an_offset
-    assert_equal "1025", @enigma.generate_offset("040895")
+  def test_it_can_generate_offsets
+    assert_equal ({a: "1", b: "0", c: "2", d: "5"}), @enigma.generate_offsets("040895")
   end
 
   def test_it_can_generate_shifts
-    expected = {a: 3, b: 0, c: 19, d: 20}
+    expected = {a: 3, b: 27, c: 73, d: 20}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", +1)
 
-    expected = {a: 24, b: 0, c: 8, d: 7}
+    expected = {a: -3, b: -27, c: -73, d: -20}
 
     assert_equal expected, @enigma.generate_shifts("02715", "040895", -1)
   end
@@ -57,8 +57,11 @@ class EnigmaTest < Minitest::Test
     key = "02715"
     date = "040895"
 
-    assert_equal ciphertext, @enigma.mutate_string(plaintext, key, date, +1)
-    assert_equal plaintext, @enigma.mutate_string(ciphertext, key, date, -1)
+    shifts = @enigma.generate_shifts(key, date, +1)
+    assert_equal ciphertext, @enigma.mutate_string(plaintext, shifts)
+
+    shifts = @enigma.generate_shifts(key, date, -1)
+    assert_equal plaintext, @enigma.mutate_string(ciphertext, shifts)
   end
 
   def test_it_can_encrypt
@@ -82,5 +85,46 @@ class EnigmaTest < Minitest::Test
                 date: "040895"}
 
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+  end
+
+  def test_it_can_crack_shifts
+    ciphertext = "vjqtbeaweqihssi"
+    expected = {a: 13, b: 22, c: 22, d: 19}
+
+    assert_equal expected, @enigma.crack_shifts(ciphertext)
+  end
+
+  def test_it_can_calculate_primary_keys
+    date = "291018"
+    shifts = @enigma.crack_shifts("vjqtbeaweqihssi")
+    expected = ["08", "02", "03", "04"]
+
+    assert_equal expected, @enigma.calculate_primary_keys(date ,shifts)
+  end
+
+  def test_it_can_check_keys_against_key_pattern
+    key1 = ["08", "80", "03", "35"]
+    key2 = ["03", "04", "03", "25"]
+
+    assert_equal true, @enigma.primary_keys_pattern?(key1)
+    assert_equal false, @enigma.primary_keys_pattern?(key2)
+  end
+
+  def test_it_can_generate_cracked_key
+    shifts = @enigma.crack_shifts("vjqtbeaweqihssi")
+    expected = "08304"
+
+    assert_equal expected, @enigma.crack_key("291018", shifts)
+  end
+
+  def test_it_can_crack
+    expected = {decryption: "hello world end",
+                date: "291018",
+                key: "08304"}
+
+    assert_equal expected, @enigma.crack("vjqtbeaweqihssi", "291018")
+
+    Date.expects(:today).returns(Date.new(2018, 10, 29))
+    assert_equal expected, @enigma.crack("vjqtbeaweqihssi")
   end
 end

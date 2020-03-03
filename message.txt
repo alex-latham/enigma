@@ -25,4 +25,4 @@ in cracking the Enigma code – was kept secret until the 1970s, and the full
 story was not known until the 1990s. It has been estimated that the efforts of
 Turing and his fellow code-breakers shortened the war by several years. What is
 certain is that they saved countless lives and helped to determine the course
-and outcome of the conflict.
+and outcome of the conflict. end
