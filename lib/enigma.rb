@@ -81,16 +81,15 @@ class Enigma
     cracked_primary_keys.values
   end
 
-  def keys_pattern?(keys)
+  def primary_keys_pattern?(keys)
     keys[0][1] == keys[1][0] && keys[1][1] == keys[2][0] &&
     keys[2][1] == keys[3][0]
   end
 
   def crack_key(date, shifts)
-    keys = crack_keys(date, shifts)
-    require 'pry'; binding.pry
+    keys = calculate_primary_keys(date, shifts)
     keys.each.with_index do |key, index|
-      break if keys_pattern?(keys)
+      break if primary_keys_pattern?(keys)
       until keys[index][1] == keys[index + 1][0]
         keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, "0")
       end
