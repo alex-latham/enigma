@@ -1,6 +1,10 @@
 require 'date'
 
 module Generable
+  def generate_charset
+    ("a".."z").to_a << " "
+  end
+  
   def generate_today_date
     Date.today.strftime("%d%m%y")
   end
