@@ -87,6 +87,7 @@ class Enigma
   def crack_key(date, shifts)
     keys = calculate_primary_keys(date, shifts)
     keys.each.with_index do |key, index|
+      require 'pry'; binding.pry
       break if primary_keys_pattern?(keys)
       until (keys[index][1] == keys[index + 1][0])
         keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, "0")
