@@ -28,4 +28,4 @@ Additionally, you will self assess your project before your evaluation. Make sur
 * **Test Driven Development: 4**
   - Stubs are used to ensure testing is more robust (i.e., testing methods that include factors such as randomness and today's date), and to improve testing efficiency. Test coverage metrics show 100% coverage.
 * **Version Control: 4**
-  - At least 60 commits have been made to this project. All six pull requests include related and logical chunks of functionality, and are named and documented to clearly communicate the purpose of the pull request. No commits include multiple pieces of functionality. No commit message is ambiguous.
+  - At least 83 commits have been made to this project. All six pull requests include related and logical chunks of functionality, and are named and documented to clearly communicate the purpose of the pull request. No commits include multiple pieces of functionality. No commit message is ambiguous.
