@@ -90,7 +90,7 @@ class Enigma
     keys = calculate_primary_keys(date, shifts)
     keys.each.with_index do |key, index|
       break if primary_keys_pattern?(keys)
-      until keys[index][1] == keys[index + 1][0]
+      until (keys[index][1] == keys[index + 1][0])
         keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, "0")
       end
     end
@@ -103,5 +103,4 @@ class Enigma
      date: date,
      key: crack_key(date, shifts)}
   end
-
 end
