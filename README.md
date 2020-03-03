@@ -19,7 +19,7 @@ Additionally, you will self assess your project before your evaluation. Make sur
 * [Evaluation Rubric](https://backend.turing.io/module1/projects/enigma/rubric)
 
 ## How to Use ENIGMA
-This tool has several tools available for use, including four command line interfaces (CLIs). An explanation for each is below:
+This tool has several tools available for use, including three command line interfaces (CLIs). An explanation for each is below:
 * *encrypt.rb*: takes two arguments--the location of an existing message file and an output location for encrypted text. Information about the encryption is returned in the CLI.
 
   `ruby runners/encrypt.rb message.txt encrypted.txt`
