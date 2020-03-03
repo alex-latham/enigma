@@ -7,6 +7,7 @@ abort("ERROR: fourth arg must be MMDDYY format") if !ARGV[2].scan(/\D/).empty? |
 
 encrypted = File.open(ARGV[0], "r")
 ciphertext = encrypted.read
+encrypted.close
 
 cracker = Cracker.new
 decryption_data = cracker.crack(ciphertext, ARGV[2])

@@ -6,6 +6,7 @@ abort("ERROR: second arg must be .txt file") if ARGV[1][-4..-1] != ".txt"
 
 message = File.open(ARGV[0], "r")
 plaintext = message.read
+message.close
 
 encryptor = Encryptor.new
 encryption_data = encryptor.encrypt(plaintext)

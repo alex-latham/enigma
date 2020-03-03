@@ -10,6 +10,7 @@ abort("ERROR: fourth arg must be MMDDYY format") if !ARGV[3].scan(/\D/).empty? |
 
 encrypted = File.open(ARGV[0], "r")
 ciphertext = encrypted.read
+encrypted.close
 
 decryptor = Decryptor.new
 decryption_data = decryptor.decrypt(ciphertext, ARGV[2], ARGV[3])
