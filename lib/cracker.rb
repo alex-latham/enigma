@@ -1,4 +1,13 @@
-module Crackable
+require './lib/enigma'
+
+class Cracker < Enigma
+  def crack(ciphertext, date = generate_today_date)
+    shifts = crack_shifts(ciphertext)
+    {decryption: mutate_string(ciphertext, shifts),
+     date: date,
+     key: crack_key(date, shifts)}
+  end
+
   def crack_shifts(ciphertext)
     d_shift = (3 - @charset.index(ciphertext[-1])) % 27
     n_shift = (13 - @charset.index(ciphertext[-2])) % 27

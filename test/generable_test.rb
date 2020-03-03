@@ -18,7 +18,7 @@ class GenerableTest < Minitest::Test
 
   def test_it_can_generate_offsets
     expected = {a: "1", b: "0", c: "2", d: "5"}
-    
+
     assert_equal expected, @enigma.generate_offsets("040895")
   end
 
@@ -53,5 +53,4 @@ class GenerableTest < Minitest::Test
     shifts = @enigma.generate_shifts(key, date, -1)
     assert_equal plaintext, @enigma.mutate_string(ciphertext, shifts)
   end
-
 end
