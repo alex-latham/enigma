@@ -33,12 +33,11 @@ module Generable
     end
     mutated_string
   end
-  
+
   def shift_charset(index, shifts)
     return @charset.rotate(shifts[:a]) if index % 4 == 0
     return @charset.rotate(shifts[:b]) if index % 4 == 1
     return @charset.rotate(shifts[:c]) if index % 4 == 2
     return @charset.rotate(shifts[:d]) if index % 4 == 3
   end
-
 end
