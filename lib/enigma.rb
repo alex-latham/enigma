@@ -6,6 +6,6 @@ class Enigma
   attr_reader :charset
 
   def initialize
-    @charset = generate_charset
+    @charset = ("a".."z").to_a << " "
   end
 end
