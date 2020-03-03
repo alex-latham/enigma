@@ -64,46 +64,45 @@ class Enigma
      date: date}
   end
 
+  def crack_shifts(ciphertext)
+    d_shift = (3 - @charset.index(ciphertext[-1])) % 27
+    n_shift = (13 - @charset.index(ciphertext[-2])) % 27
+    e_shift = (4 - @charset.index(ciphertext[-3])) % 27
+    space_shift = (26 - @charset.index(ciphertext[-4])) % 27
+    shift_values = [space_shift, e_shift, n_shift, d_shift]
+    [:a, :b, :c, :d].zip(shift_values.rotate(-ciphertext.length % 4)).to_h
+  end
+
+  def calculate_primary_keys(date, shifts)
+    offsets = generate_offsets(date)
+    cracked_primary_keys = shifts.merge(offsets) do |_, shift, offset|
+      ((-shift - offset.to_i) % 27).to_s.rjust(2, "0")
+    end
+    cracked_primary_keys.values
+  end
+
+  def keys_pattern?(keys)
+    keys[0][1] == keys[1][0] && keys[1][1] == keys[2][0] &&
+    keys[2][1] == keys[3][0]
+  end
+
+  def crack_key(date, shifts)
+    keys = crack_keys(date, shifts)
+    require 'pry'; binding.pry
+    keys.each.with_index do |key, index|
+      break if keys_pattern?(keys)
+      until keys[index][1] == keys[index + 1][0]
+        keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, "0")
+      end
+    end
+    keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
+  end
+
   def crack(ciphertext, date = generate_today_date)
     shifts = crack_shifts(ciphertext)
     {decryption: mutate_string(ciphertext, shifts),
      date: date,
-     key: key_generator(date, shifts)}
+     key: crack_key(date, shifts)}
   end
 
-  def crack_shifts(ciphertext)
-    d_shift = (@charset.index(ciphertext[-1]) - 3) % 27
-    n_shift = (@charset.index(ciphertext[-2]) - 13) % 27
-    e_shift = (@charset.index(ciphertext[-3]) - 4) % 27
-    space_shift = (@charset.index(ciphertext[-4]) - 26) % 27
-    shift_values = [space_shift, e_shift, n_shift, d_shift]
-    [:a, :b, :c, :d].zip(shift_values.rotate(ciphertext.length % 4)).to_h
-  end
-
-  def crack_keys(date, shifts)
-    offsets = generate_offsets(date)
-    cracked_keys = shifts.merge(offsets) do |_, shift, offset_shift|
-      ((shift - offset_shift.to_i) % 27).to_s.rjust(2, "0")
-    end
-    cracked_keys.values
-  end
-
-  # def keys_pattern?(key)
-  #   key[0][1] == key[1][0] && key[1][1] == key[2][0] && key[2][1] == key[3][0]
-  # end
-
-  def crack_key(keys)
-    # develop key matching pairing pattern
-    until keys[0][1] == keys[1][0]
-      keys[1] = (keys[1].to_i + 27).to_s.rjust(2, "0")
-    end
-    until keys[1][1] == keys[2][0]
-      keys[2] = (keys[2].to_i + 27).to_s.rjust(2, "0")
-    end
-    until keys[2][1] == keys[3][0]
-      keys[3] = (keys[3].to_i + 27).to_s.rjust(2, "0")
-    end
-    keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
-    # {a: keys[0].to_i, b: keys[1].to_i, c: keys[2].to_i, d: keys[3].to_i}
-  end
 end

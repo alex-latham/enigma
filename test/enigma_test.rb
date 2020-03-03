@@ -88,18 +88,19 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_crack_shifts
-    assert_equal ({a: 10, b: 3, c: 3, d: 8}), @enigma.crack_shifts("jhql")
+    ciphertext = "vjqtbeaweqihssi"
+    expected = {a: 13, b: 22, c: 22, d: 19}
+    assert_equal expected, @enigma.crack_shifts(ciphertext)
   end
 
-  def test_it_can_crack_keys
-    shifts = @enigma.crack_shifts("jhql")
-    expected = ["08", "26", "03", "08"]
+  def test_it_can_calculate_primary_keys
+    shifts = @enigma.crack_shifts("vjqtbeaweqihssi")
+    expected = ["08", "02", "03", "04"]
 
-    assert_equal expected, @enigma.crack_keys("020320",shifts)
+    assert_equal expected, @enigma.calculate_primary_keys("291018",shifts)
   end
 
   def test_it_can_check_keys_against_pattern
-    skip
     key1 = ["08", "80", "03", "35"]
     key2 = ["03", "04", "03", "25"]
 
@@ -107,13 +108,13 @@ class EnigmaTest < Minitest::Test
     assert_equal false, @enigma.keys_pattern?(key2)
   end
 
-  def test_it_can_crack_key
+  def test_it_can_generate_key
+    skip
     shifts = @enigma.crack_shifts("jhql")
-    cracked_keys = @enigma.crack_keys("020320",shifts)
 
     expected = "08035"
 
-    assert_equal expected, @enigma.crack_key(cracked_keys)
+    assert_equal expected, @enigma.crack_key("020320",shifts)
   end
 
   def test_it_can_crack
