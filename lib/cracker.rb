@@ -17,17 +17,6 @@ class Cracker < Enigma
     [:a, :b, :c, :d].zip(shift_values.rotate(-ciphertext.length % 4)).to_h
   end
 
-  def crack_key(date, shifts)
-    seeds = calculate_seeds(date, shifts)
-    seeds.each.with_index do |_, index|
-      break if key_pattern?(seeds)
-      until (seeds[index][1] == seeds[index + 1][0])
-        seeds[index + 1] = (seeds[index + 1].to_i + 27).to_s.rjust(2, '0')
-      end
-    end
-    seeds[0] + seeds[1][1] + seeds[2][1] + seeds[3][1]
-  end
-
   def calculate_seeds(date, shifts)
     offsets = generate_offsets(date)
     seeds = shifts.merge(offsets) do |_, shift, offset|
@@ -39,5 +28,16 @@ class Cracker < Enigma
   def key_pattern?(seeds)
     seeds[0][1] == seeds[1][0] && seeds[1][1] == seeds[2][0] &&
     seeds[2][1] == seeds[3][0]
+  end
+
+  def crack_key(date, shifts)
+    seeds = calculate_seeds(date, shifts)
+    seeds.each.with_index do |_, index|
+      break if key_pattern?(seeds)
+      until (seeds[index][1] == seeds[index + 1][0])
+        seeds[index + 1] = (seeds[index + 1].to_i + 27).to_s.rjust(2, '0')
+      end
+    end
+    seeds[0] + seeds[1][1] + seeds[2][1] + seeds[3][1]
   end
 end
