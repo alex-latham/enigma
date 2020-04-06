@@ -1,7 +1,7 @@
 require './lib/enigma'
 
 class Cracker < Enigma
-  def crack(ciphertext, date = generate_today_date)
+  def crack(ciphertext, date = @date)
     shifts = crack_shifts(ciphertext)
     {decryption: mutate_string(ciphertext, shifts),
      date: date,
@@ -22,7 +22,7 @@ class Cracker < Enigma
     keys.each.with_index do |_, index|
       break if primary_keys_pattern?(keys)
       until (keys[index][1] == keys[index + 1][0])
-        keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, "0")
+        keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, '0')
       end
     end
     keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
@@ -31,7 +31,7 @@ class Cracker < Enigma
   def calculate_primary_keys(date, shifts)
     offsets = generate_offsets(date)
     cracked_primary_keys = shifts.merge(offsets) do |_, shift, offset|
-      ((-shift - offset.to_i) % 27).to_s.rjust(2, "0")
+      ((-shift - offset.to_i) % 27).to_s.rjust(2, '0')
     end
     cracked_primary_keys.values
   end
