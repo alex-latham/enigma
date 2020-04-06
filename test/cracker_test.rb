@@ -35,7 +35,7 @@ class CrackerTest < Minitest::Test
     assert_equal expected, @cracker.calculate_seeds(date, shifts)
   end
 
-  def test_it_can_check_seeds_against_key_pattern
+  def test_it_can_check_seeds_against_the_key_pattern
     seeds1 = ['08', '80', '03', '35']
     seeds2 = ['03', '04', '03', '25']
 
@@ -43,7 +43,7 @@ class CrackerTest < Minitest::Test
     assert_equal false, @cracker.key_pattern?(seeds2)
   end
 
-  def test_it_can_generate_cracked_key
+  def test_it_can_crack_a_key
     shifts = @cracker.crack_shifts('vjqtbeaweqihssi')
     expected = '08304'
 
