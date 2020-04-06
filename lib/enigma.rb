@@ -21,6 +21,13 @@ class Enigma < Cipher
     end
   end
 
+  def shift_charset(index, shifts)
+    return @charset.rotate(shifts[:a]) if index % 4 == 0
+    return @charset.rotate(shifts[:b]) if index % 4 == 1
+    return @charset.rotate(shifts[:c]) if index % 4 == 2
+    return @charset.rotate(shifts[:d]) if index % 4 == 3
+  end
+
   def mutate_string(string, shifts)
     mutated_string = String.new
     string.each_char.with_index do |char, index|
@@ -30,12 +37,5 @@ class Enigma < Cipher
       mutated_string += char unless @charset.include?(char)
     end
     mutated_string
-  end
-
-  def shift_charset(index, shifts)
-    return @charset.rotate(shifts[:a]) if index % 4 == 0
-    return @charset.rotate(shifts[:b]) if index % 4 == 1
-    return @charset.rotate(shifts[:c]) if index % 4 == 2
-    return @charset.rotate(shifts[:d]) if index % 4 == 3
   end
 end
