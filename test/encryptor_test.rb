@@ -7,6 +7,10 @@ class EncryptorTest < Minitest::Test
     @encryptor = Encryptor.new
   end
 
+  def test_it_can_exist
+    assert_instance_of Encryptor, @encryptor
+  end
+
   def test_it_can_encrypt
     expected = {encryption: 'keder ohulw!',
                 key: '02715',

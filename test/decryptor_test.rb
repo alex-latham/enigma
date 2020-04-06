@@ -6,6 +6,10 @@ class DecryptorTest < Minitest::Test
     @decryptor = Decryptor.new
   end
 
+  def test_it_can_exist
+    assert_instance_of Decryptor, @decryptor
+  end
+
   def test_it_can_decrypt
     expected = {decryption: 'hello world',
                 key: '02715',
