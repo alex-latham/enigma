@@ -7,13 +7,16 @@ class CrackerTest < Minitest::Test
     @cracker = Cracker.new
   end
 
+  def test_it_can_exist
+    assert_instance_of Cracker, @cracker
+  end
+
   def test_it_can_crack
     expected = {decryption: 'hello world end',
                 date: '291018',
                 key: '08304'}
 
     assert_equal expected, @cracker.crack('vjqtbeaweqihssi', '291018')
-
     assert_equal expected, @cracker.crack('vjqtbeaweqihssi')
   end
 
@@ -24,20 +27,20 @@ class CrackerTest < Minitest::Test
     assert_equal expected, @cracker.crack_shifts(ciphertext)
   end
 
-  def test_it_can_calculate_primary_keys
+  def test_it_can_calculate_seeds
     date = '291018'
     shifts = @cracker.crack_shifts('vjqtbeaweqihssi')
     expected = ['08', '02', '03', '04']
 
-    assert_equal expected, @cracker.calculate_primary_keys(date ,shifts)
+    assert_equal expected, @cracker.calculate_seeds(date, shifts)
   end
 
-  def test_it_can_check_keys_against_key_pattern
-    key1 = ['08', '80', '03', '35']
-    key2 = ['03', '04', '03', '25']
+  def test_it_can_check_seeds_against_key_pattern
+    seeds1 = ['08', '80', '03', '35']
+    seeds2 = ['03', '04', '03', '25']
 
-    assert_equal true, @cracker.primary_keys_pattern?(key1)
-    assert_equal false, @cracker.primary_keys_pattern?(key2)
+    assert_equal true, @cracker.key_pattern?(seeds1)
+    assert_equal false, @cracker.key_pattern?(seeds2)
   end
 
   def test_it_can_generate_cracked_key

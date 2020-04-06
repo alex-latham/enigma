@@ -18,26 +18,26 @@ class Cracker < Enigma
   end
 
   def crack_key(date, shifts)
-    keys = calculate_primary_keys(date, shifts)
-    keys.each.with_index do |_, index|
-      break if primary_keys_pattern?(keys)
-      until (keys[index][1] == keys[index + 1][0])
-        keys[index + 1] = (keys[index + 1].to_i + 27).to_s.rjust(2, '0')
+    seeds = calculate_seeds(date, shifts)
+    seeds.each.with_index do |_, index|
+      break if key_pattern?(seeds)
+      until (seeds[index][1] == seeds[index + 1][0])
+        seeds[index + 1] = (seeds[index + 1].to_i + 27).to_s.rjust(2, '0')
       end
     end
-    keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
+    seeds[0] + seeds[1][1] + seeds[2][1] + seeds[3][1]
   end
 
-  def calculate_primary_keys(date, shifts)
+  def calculate_seeds(date, shifts)
     offsets = generate_offsets(date)
-    cracked_primary_keys = shifts.merge(offsets) do |_, shift, offset|
-      ((-shift - offset.to_i) % 27).to_s.rjust(2, '0')
+    seeds = shifts.merge(offsets) do |_, shift, offset|
+      ((-shift - offset) % 27).to_s.rjust(2, '0')
     end
-    cracked_primary_keys.values
+    seeds.values
   end
 
-  def primary_keys_pattern?(keys)
-    keys[0][1] == keys[1][0] && keys[1][1] == keys[2][0] &&
-    keys[2][1] == keys[3][0]
+  def key_pattern?(seeds)
+    seeds[0][1] == seeds[1][0] && seeds[1][1] == seeds[2][0] &&
+    seeds[2][1] == seeds[3][0]
   end
 end
