@@ -1,13 +1,10 @@
 require 'date'
 
 class  Cipher
-  attr_reader :charset
+  attr_reader :charset, :date
 
   def initialize
-    @charset = ("a".."z").to_a << " "
-  end
-
-  def generate_today_date
-    Date.today.strftime("%d%m%y")
+    @charset = ('a'..'z').to_a << ' '
+    @date = Date.today.strftime('%d%m%y')
   end
 end
