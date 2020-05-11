@@ -1,4 +1,4 @@
-# How to Use ENIGMA
+# Enigma
 This tool has three command line interfaces (CLIs). An explanation for each is below:
   * *encrypt.rb*: takes two arguments--the location of an existing message file and an output location for encrypted text. Information about the encryption is returned in the CLI.
 
